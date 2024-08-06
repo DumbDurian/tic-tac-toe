@@ -1,0 +1,75 @@
+import { Button, VerticalBox, GridBox, GroupBox } from "std-widgets.slint";
+
+export enum Player {
+    X,
+    O,
+    None,
+}
+
+export struct DataField {
+    player: Player,
+    disable-ta: bool,
+}
+
+export global Logic {
+    callback user-input(int);
+    callback restart();
+}
+
+export component Field inherits Rectangle {
+    in-out property <int> id;
+    in-out property<Player> player;
+    in-out property<bool> disable_ta;
+    background: touch_area.pressed ? white : whitesmoke;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 6px;
+    touch_area := TouchArea {
+        clicked => {
+          if (!root.disable_ta) {
+                root.disable_ta = true;
+                Logic.user-input(id);
+            }
+        }    
+    }
+
+    Image {
+        source: parent.player == Player.X ? @image-url("../assets/E.jpg") :
+            parent.player == Player.O ? @image-url("../assets/J.jpg") :
+            @image-url("");
+        width: parent.width;
+        height: parent.height;
+    }
+}
+
+
+export component AppWindow inherits Window {
+    default-font-size: 24px;
+    in-out property <[DataField]> data_model;
+    width: 590px;
+    height: 690px;
+    Rectangle {
+        Rectangle {
+            width: parent.width;
+            height: 590px;
+        }
+        for data[i] in root.data_model: Field {
+            x: mod(i, 3) * 200px;
+            y: floor(i / 3) * 200px;
+            id: i;
+            player: data.player;
+            disable-ta: data.disable-ta;
+            width: 190px;
+            height: 190px;
+        }
+    }
+        VerticalLayout {
+        y: 600px;
+        height: 90px;
+        Button {
+            text: "Restart";
+            clicked => { Logic.restart() }
+        }
+    }
+}
+

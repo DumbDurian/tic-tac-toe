@@ -1,0 +1,8 @@
+[workspace]
+
+members = [
+  "tictactoe",
+  "mcts",
+  "cli",
+  "gui",
+]

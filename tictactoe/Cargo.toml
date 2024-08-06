@@ -1,0 +1,9 @@
+[package]
+name = "tictactoe"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+itertools = "0.13.0"
+mcts = { path = "../mcts" }
+rand = "0.8.5"
