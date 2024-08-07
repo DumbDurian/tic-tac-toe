@@ -12,7 +12,7 @@ Some aspects of this project are more complicated than necessary, so I could lea
 without needing to touch the algorithm.
 - Use of cargo workspace to have completely seperate projects for the game logic, the algorithm and the two user interfaces (GUI and CLI).
 - Use of arena allocator for implementing the tree structure required for the MCTS algorithm to avoid self-referential data structures.
-- A replacements of `X` and `O` with the cats Emma and Julius in the GUI version.
+- A replacement of `X` and `O` with the cats Emma and Julius in the GUI version.
 
 #### Limitations
 
