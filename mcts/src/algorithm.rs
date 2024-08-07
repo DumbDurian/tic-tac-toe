@@ -1,36 +1,34 @@
-use crate::mcts::{Arena,MCTS};
+use crate::mcts::{Arena, MCTS};
 use std::fmt::Debug;
 
 impl<T: Clone + Debug + MCTS<MCTSState = T>> Arena<T> {
-
     fn node_expansion(&mut self, node: usize) {
-
         let lm = self[node].game_state.legal_moves().into_iter();
 
         for m in lm {
             self.generate_child_for_move(node, m);
             // let child_id = self.next_id();
         }
-
     }
 
     fn generate_child_for_move(&mut self, node: usize, gm: <T as MCTS>::MCTSMove) {
-            let mut gs = self[node].game_state.clone();
-            gs = gs.exec_move(gm);
-            self.child_from_node_with_game_state(node, gs);
-    }    
-        
+        let mut gs = self[node].game_state.clone();
+        gs = gs.exec_move(gm);
+        self.child_from_node_with_game_state(node, gs);
+    }
+
     fn determine_next_node(&self) -> usize {
-        
         let mut current = 0;
 
         while !self[current].is_leaf() {
-            current = *self[current].children.iter()
-                .max_by_key(|child| self.ucb1_of(**child)).unwrap();
+            current = *self[current]
+                .children
+                .iter()
+                .max_by_key(|child| self.ucb1_of(**child))
+                .unwrap();
         }
 
-        return current
-
+        return current;
     }
 
     fn process_node(&mut self, node: usize) {
@@ -49,7 +47,6 @@ impl<T: Clone + Debug + MCTS<MCTSState = T>> Arena<T> {
     }
 
     fn propagate_from(&mut self, node: usize, game_score: i32) {
-
         let mut node = node;
 
         loop {
@@ -59,16 +56,13 @@ impl<T: Clone + Debug + MCTS<MCTSState = T>> Arena<T> {
                     self[parent].visits += 1;
                     node = self[parent].id;
                 }
-                None => break
+                None => break,
             }
         }
     }
 
     pub(crate) fn iterate_once(&mut self) {
-
-        let node = self.determine_next_node();    
+        let node = self.determine_next_node();
         self.process_node(node);
-
     }
-
 }

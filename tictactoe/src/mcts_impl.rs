@@ -22,11 +22,9 @@ impl MCTS for TTTGameState {
     }
 
     fn terminate(&self) -> i32 {
-
         let mut gs = self.clone();
-        
-        loop {
 
+        loop {
             if gs.is_terminal() {
                 match gs.get_winner() {
                     TTTPlayer::Human => return 0,
@@ -35,15 +33,12 @@ impl MCTS for TTTGameState {
                 }
             }
 
-        let rm = gs.get_random_move();
-        gs = gs.exec_move(rm);
-
+            let rm = gs.get_random_move();
+            gs = gs.exec_move(rm);
         }
-
     }
 
     fn is_terminal(&self) -> bool {
         self.is_terminal()
     }
-        
 }

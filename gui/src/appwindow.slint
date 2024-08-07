@@ -16,6 +16,10 @@ export global Logic {
     callback restart();
 }
 
+export global PopupData {
+    in-out property <string> text ;
+}
+
 export component Field inherits Rectangle {
     in-out property <int> id;
     in-out property<Player> player;
@@ -46,6 +50,14 @@ export component Field inherits Rectangle {
 export component AppWindow inherits Window {
     default-font-size: 24px;
     in-out property <[DataField]> data_model;
+    in-out property <string> result;
+
+    public function show-result(txt: string) {
+        PopupData.text = txt;
+        popup.show();
+    }    
+
+    
     width: 590px;
     height: 690px;
     Rectangle {
@@ -71,5 +83,22 @@ export component AppWindow inherits Window {
             clicked => { Logic.restart() }
         }
     }
+    
+    popup := PopupWindow {
+        width: 512px;
+        height: 256px;
+        x: (root.width - self.width) / 2;
+        y: (root.height - self.height) / 2;
+        close-on-click: true;
+        
+        Rectangle {
+            background: lightskyblue;
+            Text {
+                text: PopupData.text;
+                color: black;
+            }
+        }
+    }
+
 }
 

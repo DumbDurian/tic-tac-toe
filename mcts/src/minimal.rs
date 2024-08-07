@@ -1,6 +1,6 @@
-use crate::mcts::{Arena,MCTS,Node};
+use crate::mcts::{Arena, Node, MCTS};
 
-#[derive(Clone,Debug)]
+#[derive(Clone, Debug)]
 pub struct GameStateTest {}
 
 impl Default for GameStateTest {
@@ -9,16 +9,15 @@ impl Default for GameStateTest {
     }
 }
 
-    struct MCTSMove;
-    struct MCTSState;
+struct MCTSMove;
+struct MCTSState;
 
 impl MCTS for GameStateTest {
-
     type MCTSMove = usize;
     type MCTSState = GameStateTest;
-    
+
     fn legal_moves(&self) -> Vec<usize> {
-        vec![0,1]
+        vec![0, 1]
     }
 
     fn exec_move(self, gm: usize) -> GameStateTest {
@@ -40,5 +39,4 @@ impl MCTS for GameStateTest {
     fn is_terminal(&self) -> bool {
         false
     }
-
 }
