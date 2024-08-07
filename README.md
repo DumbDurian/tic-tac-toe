@@ -14,6 +14,12 @@ without needing to touch the algorithm.
 - Use of arena allocator for implementing the tree structure required for the MCTS algorithm to avoid self-referential data structures.
 - A replacements of `X` and `O` with the cats Emma and Julius in the GUI version.
 
+#### Limitations
+
+- The implementation is a naive version of MCTS using the UCB1 score. The decisions quality of the algorithm could certainly be better.
+- The algorithm does not exploit symmetry in the game states (i.e. mirrored board states are treated separately).
+- The algorithm does not reuse the lower tree body after each move (i.e. a new tree is created every time a move from the computer is requested).
+
 #### Instructions
 
 You can simply play the game on my website https://dumbdurian.com/pages/tictactoe/
