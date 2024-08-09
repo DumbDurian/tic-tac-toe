@@ -110,7 +110,7 @@ impl TTTGameState {
     }
 
     pub fn is_draw(&self) -> bool {
-        if self.legal_moves_impl().len() == 0 {
+        if (self.legal_moves_impl().len() == 0) & !self.has_winner() {
             true
         } else {
             false
